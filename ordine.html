@@ -476,24 +476,15 @@
 
     mostra('stato-invio');
 
-    try {
-      // no-cors: necessario per Google Apps Script da domini esterni.
-      // La richiesta viene inviata correttamente ma non possiamo leggere la risposta.
-      await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: JSON.stringify(payload),
-      });
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify(payload),
+    }).catch(err => console.error('Fetch error:', err));
 
-      document.getElementById('ok-nome').textContent = nome;
-      document.getElementById('ok-telefono').textContent = telefono;
-      sessionStorage.removeItem('ordine');
-      mostra('stato-ok');
-
-    } catch (err) {
-      console.error(err);
-      mostra('stato-errore');
-    }
+    document.getElementById('ok-nome').textContent = nome;
+    sessionStorage.removeItem('ordine');
+    mostra('stato-ok');
   });
 </script>
 </body>
