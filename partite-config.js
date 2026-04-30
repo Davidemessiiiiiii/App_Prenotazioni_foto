@@ -2,7 +2,12 @@
 // Lanciare 'python genera_config.py' per aggiornare
 
 const FOTO_CONFIG = {
-  "1": [
+  "2": [
+    {
+      "publicId": "promo_photos_logo_ck2pvq",
+      "thumb": "https://res.cloudinary.com/dsl5rkm7q/image/upload/w_300,h_200,c_fill,q_auto,f_auto/promo_photos_logo_ck2pvq",
+      "full": "https://res.cloudinary.com/dsl5rkm7q/image/upload/w_1400,q_auto,f_auto/promo_photos_logo_ck2pvq"
+    },
     {
       "publicId": "Gemini_Generated_Image_l4x1wml4x1wml4x1_uwbbtj",
       "thumb": "https://res.cloudinary.com/dsl5rkm7q/image/upload/w_300,h_200,c_fill,q_auto,f_auto/Gemini_Generated_Image_l4x1wml4x1wml4x1_uwbbtj",

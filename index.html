@@ -94,7 +94,7 @@
     .istruzioni {
       max-width: 680px;
       margin: 32px auto;
-      padding: 0 24px;
+      padding: 0 16px;
     }
 
     .istruzioni-box {
@@ -112,11 +112,20 @@
       color: var(--bianco);
     }
 
+    /* listino prezzi su mobile: testo più piccolo */
+    @media (max-width: 480px) {
+      .istruzioni-box small { display: none; }
+      .istruzioni-box [style*="justify-content:space-between"] {
+        flex-wrap: wrap;
+        gap: 2px;
+      }
+    }
+
     /* SEZIONI GIRONE */
     .container {
       max-width: 760px;
       margin: 0 auto;
-      padding: 0 24px 80px;
+      padding: 0 16px 80px;
     }
 
     .girone-section {
@@ -202,10 +211,10 @@
     }
 
     .card-inner {
-      padding: 16px 20px;
+      padding: 14px 16px;
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 12px;
     }
 
     .partita-num {
@@ -214,7 +223,7 @@
       font-weight: 700;
       color: var(--grigio);
       letter-spacing: 1px;
-      min-width: 28px;
+      min-width: 24px;
     }
 
     .partita-info {
@@ -241,8 +250,9 @@
     .meta {
       margin-top: 4px;
       display: flex;
-      gap: 12px;
+      gap: 8px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .meta-item {
@@ -283,6 +293,16 @@
       color: var(--grigio);
       font-size: 18px;
       transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      header { padding: 32px 16px 28px; }
+      .squadre { font-size: 15px; }
+      .squadre .vs { margin: 0 4px; font-size: 12px; }
+      .card-inner { padding: 12px 12px 12px 14px; gap: 8px; }
+      .girone-title { font-size: 18px; }
     }
 
     /* DA DEFINIRE */
