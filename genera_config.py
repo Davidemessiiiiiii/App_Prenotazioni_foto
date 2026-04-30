@@ -63,7 +63,8 @@ def main():
         f.write(js_content)
 
     print(f"\n✅ File generato: partite-config.js")
-    print("   Carica partite-config.js su Netlify insieme agli altri file.")
+    print("   Ora fai commit e push su GitHub per aggiornare il sito:")
+    print("   git add partite-config.js && git commit -m 'aggiorna foto' && git push")
 
 if __name__ == "__main__":
     main()
