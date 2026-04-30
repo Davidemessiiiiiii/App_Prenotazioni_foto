@@ -396,6 +396,11 @@
 
   <button class="btn-invia" id="btn-invia">Conferma ordine →</button>
 
+  <div style="margin-top: 24px; text-align: center; font-size: 13px; color: var(--grigio); line-height: 1.8;">
+    Hai bisogno di aiuto?<br>
+    <a href="tel:+393756033714" style="color: var(--arancione); text-decoration: none; font-weight: 600;">📞 +39 375 603 3714</a>
+  </div>
+
 </div>
 
 <script>
@@ -473,21 +478,18 @@
     mostra('stato-invio');
 
     try {
-      const res = await fetch(APPS_SCRIPT_URL, {
+      // no-cors: necessario per Google Apps Script da domini esterni.
+      // La richiesta viene inviata correttamente ma non possiamo leggere la risposta.
+      await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
+        mode: 'no-cors',
         body: JSON.stringify(payload),
       });
 
-      const risultato = await res.json();
-
-      if (risultato.status === 'ok') {
-        document.getElementById('ok-nome').textContent = nome;
-        document.getElementById('ok-telefono').textContent = telefono;
-        sessionStorage.removeItem('ordine');
-        mostra('stato-ok');
-      } else {
-        throw new Error(risultato.message || 'Errore sconosciuto');
-      }
+      document.getElementById('ok-nome').textContent = nome;
+      document.getElementById('ok-telefono').textContent = telefono;
+      sessionStorage.removeItem('ordine');
+      mostra('stato-ok');
 
     } catch (err) {
       console.error(err);
