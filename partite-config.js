@@ -35,5 +35,17 @@ const FOTO_CONFIG = {
       "thumb": "https://res.cloudinary.com/dsl5rkm7q/image/upload/w_300,h_200,c_fill,q_auto,f_auto/logo_minibasket_senza_sfondo_msmbka",
       "full": "https://res.cloudinary.com/dsl5rkm7q/image/upload/w_1400,q_auto,f_auto/logo_minibasket_senza_sfondo_msmbka"
     }
+  ],
+  "3": [
+    {
+      "publicId": "foto_torneo_2_osalxk",
+      "thumb": "https://res.cloudinary.com/dsl5rkm7q/image/upload/w_300,h_200,c_fill,q_auto,f_auto/foto_torneo_2_osalxk",
+      "full": "https://res.cloudinary.com/dsl5rkm7q/image/upload/w_1400,q_auto,f_auto/foto_torneo_2_osalxk"
+    },
+    {
+      "publicId": "ESEMPI_DI_FRAME_DA_APPENDERE_A_SPORTAREA_wbkzi6",
+      "thumb": "https://res.cloudinary.com/dsl5rkm7q/image/upload/w_300,h_200,c_fill,q_auto,f_auto/ESEMPI_DI_FRAME_DA_APPENDERE_A_SPORTAREA_wbkzi6",
+      "full": "https://res.cloudinary.com/dsl5rkm7q/image/upload/w_1400,q_auto,f_auto/ESEMPI_DI_FRAME_DA_APPENDERE_A_SPORTAREA_wbkzi6"
+    }
   ]
 };
