@@ -259,6 +259,26 @@
       letter-spacing: 0.5px;
     }
 
+    .foto-lente {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: rgba(0,0,0,0.65);
+    border: none;
+    color: var(--bianco);
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    z-index: 10;
+  }
+  .foto-lente:hover { background: rgba(0,0,0,0.9); }
+
     /* BARRA IN BASSO */
     .barra-bottom {
       position: fixed;
@@ -540,6 +560,7 @@
           </div>
         </div>
         <div class="foto-numero">${i + 1}</div>
+        <button class="foto-lente" data-index="${i}" title="Ingrandisci">🔍</button>
       `;
 
       const img = item.querySelector('img');
@@ -558,6 +579,11 @@
 
       item.addEventListener('click', (e) => {
         toggleSelezione(i, item);
+      });
+
+      item.querySelector('.foto-lente').addEventListener('click', (e) => {
+        e.stopPropagation(); // non triggerare la selezione
+        apriLightbox(i);
       });
 
       griglia.appendChild(item);
