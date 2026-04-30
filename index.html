@@ -2,506 +2,449 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Foto Partite</title>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7° Torneo Città di Cuneo – Ordine Foto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #0d0f14;
-      --surface: #161a23;
-      --card: #1e2330;
-      --accent: #f0c040;
-      --accent2: #e05a2b;
-      --text: #eef0f5;
-      --muted: #7a8099;
-      --border: #2a2f3e;
-      --radius: 12px;
+      --arancione: #FF6B00;
+      --arancione-chiaro: #FF8C35;
+      --nero: #0A0A0A;
+      --nero-card: #141414;
+      --nero-hover: #1E1E1E;
+      --bianco: #F5F5F0;
+      --grigio: #888880;
+      --grigio-scuro: #2A2A2A;
+      --girone-a: #FF6B00;
+      --girone-b: #3B9EFF;
+      --finale: #C9A84C;
     }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      background: var(--nero);
+      color: var(--bianco);
+      font-family: 'Barlow', sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* ── HEADER ── */
+    /* HEADER */
     header {
-      background: var(--surface);
-      border-bottom: 2px solid var(--accent);
-      padding: 18px 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    header .logo {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      color: var(--accent);
-      letter-spacing: 2px;
-    }
-    header .sub {
-      font-size: 0.85rem;
-      color: var(--muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    /* ── SCREENS ── */
-    .screen { display: none; }
-    .screen.active { display: block; }
-
-    /* ── SCREEN 1: scelta partita ── */
-    #screen-partita {
-      max-width: 700px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
-    #screen-partita h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2.2rem;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    #screen-partita p {
-      color: var(--muted);
-      margin-bottom: 32px;
-      font-size: 0.95rem;
-    }
-
-    .partita-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-    }
-
-    .partita-card {
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 22px 24px;
-      cursor: pointer;
-      transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
       position: relative;
+      padding: 48px 24px 40px;
+      text-align: center;
+      border-bottom: 1px solid var(--grigio-scuro);
       overflow: hidden;
     }
+
+    header::before {
+      content: '🏀';
+      position: absolute;
+      font-size: 300px;
+      opacity: 0.03;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      line-height: 1;
+    }
+
+    .header-tag {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--arancione);
+      border: 1px solid var(--arancione);
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(32px, 8vw, 64px);
+      font-weight: 900;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      color: var(--bianco);
+    }
+
+    h1 span {
+      color: var(--arancione);
+      display: block;
+    }
+
+    .header-sub {
+      margin-top: 12px;
+      font-size: 14px;
+      color: var(--grigio);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* ISTRUZIONI */
+    .istruzioni {
+      max-width: 680px;
+      margin: 32px auto;
+      padding: 0 24px;
+    }
+
+    .istruzioni-box {
+      background: var(--nero-card);
+      border: 1px solid var(--grigio-scuro);
+      border-left: 3px solid var(--arancione);
+      border-radius: 4px;
+      padding: 16px 20px;
+      font-size: 14px;
+      color: var(--grigio);
+      line-height: 1.6;
+    }
+
+    .istruzioni-box strong {
+      color: var(--bianco);
+    }
+
+    /* SEZIONI GIRONE */
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .girone-section {
+      margin-bottom: 48px;
+    }
+
+    .girone-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--grigio-scuro);
+    }
+
+    .girone-badge {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    .badge-a { background: var(--girone-a); color: #000; }
+    .badge-b { background: var(--girone-b); color: #000; }
+    .badge-finale { background: var(--finale); color: #000; }
+
+    .girone-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--bianco);
+    }
+
+    .girone-count {
+      margin-left: auto;
+      font-size: 12px;
+      color: var(--grigio);
+    }
+
+    /* CARD PARTITA */
+    .partita-card {
+      background: var(--nero-card);
+      border: 1px solid var(--grigio-scuro);
+      border-radius: 6px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      overflow: hidden;
+      text-decoration: none;
+      display: block;
+      position: relative;
+    }
+
     .partita-card::before {
       content: '';
       position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 4px;
-      background: var(--accent);
-      transform: scaleY(0);
-      transition: transform 0.2s;
-      transform-origin: bottom;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: var(--grigio-scuro);
+      transition: background 0.2s;
     }
-    .partita-card:hover::before { transform: scaleY(1); }
+
+    .partita-card.girone-a::before { background: var(--girone-a); }
+    .partita-card.girone-b::before { background: var(--girone-b); }
+    .partita-card.girone-finale::before { background: var(--finale); }
+
     .partita-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(240,192,64,0.12);
-    }
-    .partita-card .data {
-      font-size: 0.75rem;
-      color: var(--accent2);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-      font-weight: 600;
-    }
-    .partita-card .nome {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.4rem;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .partita-card .desc {
-      font-size: 0.82rem;
-      color: var(--muted);
+      background: var(--nero-hover);
+      border-color: #3A3A3A;
+      transform: translateX(4px);
     }
 
-    /* ── SCREEN 2: nome genitore ── */
-    #screen-nome {
-      max-width: 480px;
-      margin: 80px auto;
-      padding: 0 20px;
+    .partita-card:hover .freccia {
+      transform: translateX(4px);
+      color: var(--arancione);
     }
-    #screen-nome h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 2rem;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    #screen-nome p { color: var(--muted); margin-bottom: 28px; font-size: 0.9rem; }
 
-    .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block;
-      font-size: 0.82rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    .form-group input {
-      width: 100%;
-      background: var(--card);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 16px;
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .form-group input:focus { border-color: var(--accent); }
-    .form-group input::placeholder { color: var(--muted); }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent);
-      color: #0d0f14;
-      border: none;
-      border-radius: 8px;
-      padding: 14px 28px;
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.1rem;
-      letter-spacing: 1.5px;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
-    }
-    .btn:hover { background: #f7d060; transform: translateY(-1px); }
-    .btn:active { transform: translateY(0); }
-    .btn:disabled { background: var(--muted); cursor: not-allowed; transform: none; }
-
-    .btn-outline {
-      background: transparent;
-      border: 1.5px solid var(--border);
-      color: var(--muted);
-      padding: 10px 20px;
-      font-size: 0.9rem;
-    }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); background: transparent; }
-
-    /* ── SCREEN 3: galleria foto ── */
-    #screen-foto { padding: 24px 28px; }
-
-    .foto-header {
+    .card-inner {
+      padding: 16px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
       gap: 16px;
-      margin-bottom: 24px;
-    }
-    .foto-header-left h2 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.8rem;
-      color: var(--accent);
-    }
-    .foto-header-left .info {
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 2px;
-    }
-    .foto-header-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
     }
 
-    .counter-badge {
-      background: var(--accent2);
-      color: white;
-      border-radius: 20px;
-      padding: 4px 14px;
-      font-size: 0.82rem;
+    .partita-num {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--grigio);
+      letter-spacing: 1px;
+      min-width: 28px;
+    }
+
+    .partita-info {
+      flex: 1;
+    }
+
+    .squadre {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--bianco);
+      line-height: 1.2;
+    }
+
+    .squadre .vs {
+      color: var(--grigio);
+      font-weight: 400;
+      font-size: 14px;
+      margin: 0 6px;
+    }
+
+    .meta {
+      margin-top: 4px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .meta-item {
+      font-size: 12px;
+      color: var(--grigio);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .meta-item svg {
+      width: 12px;
+      height: 12px;
+      opacity: 0.6;
+    }
+
+    .no-foto-badge {
+      font-size: 11px;
       font-weight: 600;
-      display: none;
-    }
-    .counter-badge.visible { display: inline-block; }
-
-    /* ── GALLERY GRID ── */
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 12px;
+      color: var(--grigio);
+      background: var(--grigio-scuro);
+      padding: 2px 8px;
+      border-radius: 2px;
+      letter-spacing: 0.5px;
     }
 
-    .foto-item {
-      position: relative;
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 2.5px solid transparent;
-      transition: border-color 0.2s, transform 0.15s;
-      aspect-ratio: 4/3;
-      background: var(--card);
+    .foto-badge {
+      font-size: 11px;
+      font-weight: 600;
+      color: #000;
+      background: var(--arancione);
+      padding: 2px 8px;
+      border-radius: 2px;
+      letter-spacing: 0.5px;
     }
-    .foto-item:hover { transform: scale(1.02); }
-    .foto-item.selected {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(240,192,64,0.3);
-    }
-    .foto-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: opacity 0.3s;
-    }
-    .foto-item .overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(240,192,64,0.15);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-    .foto-item.selected .overlay { opacity: 1; }
 
-    /* Checkbox visivo */
-    .foto-item .check {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 26px;
-      height: 26px;
-      background: var(--bg);
-      border: 2px solid var(--border);
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s, border-color 0.2s;
+    .freccia {
+      color: var(--grigio);
+      font-size: 18px;
+      transition: all 0.2s;
     }
-    .foto-item.selected .check {
-      background: var(--accent);
-      border-color: var(--accent);
-    }
-    .foto-item .check svg {
-      opacity: 0;
-      transition: opacity 0.15s;
-    }
-    .foto-item.selected .check svg { opacity: 1; }
 
-    /* Nome foto */
-    .foto-item .foto-nome {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: linear-gradient(transparent, rgba(13,15,20,0.9));
-      padding: 20px 10px 8px;
-      font-size: 0.72rem;
-      color: var(--text);
-      opacity: 0;
-      transition: opacity 0.2s;
+    /* DA DEFINIRE */
+    .partita-card.da-definire {
+      opacity: 0.5;
+      cursor: default;
     }
-    .foto-item:hover .foto-nome, .foto-item.selected .foto-nome { opacity: 1; }
+    .partita-card.da-definire:hover {
+      transform: none;
+      background: var(--nero-card);
+    }
 
-    /* Loading */
-    .loading-stato {
+    /* FOOTER */
+    footer {
       text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-    }
-    .spinner {
-      width: 40px; height: 40px;
-      border: 3px solid var(--border);
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      margin: 0 auto 16px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ── BARRA INVIO FISSA ── */
-    .bottom-bar {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: var(--surface);
-      border-top: 2px solid var(--accent);
-      padding: 16px 28px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      transform: translateY(100%);
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-      z-index: 100;
-    }
-    .bottom-bar.visible { transform: translateY(0); }
-    .bottom-bar .selezione-info {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-    .bottom-bar .selezione-info strong { color: var(--accent); font-size: 1.1rem; }
-
-    /* ── TOAST ── */
-    #toast {
-      position: fixed;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: #1e2a1a;
-      color: #7dca6b;
-      border: 1px solid #3a5a35;
-      border-radius: 8px;
-      padding: 12px 24px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      opacity: 0;
-      transition: opacity 0.3s, transform 0.3s;
-      z-index: 200;
-      white-space: nowrap;
-    }
-    #toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-    #toast.errore {
-      background: #2a1a1a;
-      color: #ca6b6b;
-      border-color: #5a3535;
+      padding: 24px;
+      font-size: 12px;
+      color: var(--grigio);
+      border-top: 1px solid var(--grigio-scuro);
     }
 
-    /* ── MODALE CONFERMA ── */
-    .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.7);
-      display: flex; align-items: center; justify-content: center;
-      z-index: 300;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.25s;
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal {
-      background: var(--surface);
-      border: 1.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 32px;
-      max-width: 420px;
-      width: 90%;
-      transform: scale(0.95);
-      transition: transform 0.25s;
-    }
-    .modal-overlay.open .modal { transform: scale(1); }
-    .modal h3 {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: 1.6rem;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-    .modal p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 8px; }
-    .modal .lista-foto {
-      background: var(--card);
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin: 16px 0;
-      max-height: 180px;
-      overflow-y: auto;
-      font-size: 0.82rem;
-      color: var(--text);
-      line-height: 1.8;
-    }
-    .modal .azioni {
-      display: flex; gap: 12px; margin-top: 20px;
+    /* ANIMAZIONE ENTRATA */
+    .partita-card {
+      animation: fadeUp 0.3s ease both;
     }
 
-    /* Padding bottom per galleria quando barra visibile */
-    #screen-foto.con-barra { padding-bottom: 90px; }
-
-    @media (max-width: 600px) {
-      header { padding: 14px 16px; }
-      #screen-foto { padding: 16px; }
-      .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
-      .bottom-bar { padding: 12px 16px; flex-wrap: wrap; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+
+    .girone-section:nth-child(1) .partita-card:nth-child(1) { animation-delay: 0.05s; }
+    .girone-section:nth-child(1) .partita-card:nth-child(2) { animation-delay: 0.10s; }
+    .girone-section:nth-child(1) .partita-card:nth-child(3) { animation-delay: 0.15s; }
+    .girone-section:nth-child(1) .partita-card:nth-child(4) { animation-delay: 0.20s; }
+    .girone-section:nth-child(1) .partita-card:nth-child(5) { animation-delay: 0.25s; }
+    .girone-section:nth-child(2) .partita-card { animation-delay: 0.30s; }
+    .girone-section:nth-child(3) .partita-card { animation-delay: 0.40s; }
   </style>
 </head>
 <body>
 
 <header>
-  <div>
-    <div class="logo">⚽ Foto Partite</div>
-    <div class="sub">Seleziona le tue foto</div>
-  </div>
+  <div class="header-tag">📸 Ordine Foto</div>
+  <h1>7° Torneo<span>Città di Cuneo</span></h1>
+  <p class="header-sub">Aquilotti / Gazzelle &nbsp;·&nbsp; SportArea &nbsp;·&nbsp; 1–3 Maggio 2025</p>
 </header>
 
-<!-- SCREEN 1: Scelta partita -->
-<div id="screen-partita" class="screen active">
-  <h2>Scegli la Partita</h2>
-  <p>Clicca sulla partita per vedere tutte le foto disponibili.</p>
-  <div class="partita-grid" id="partita-grid">
-    <!-- Generato da foto.js -->
+<div class="istruzioni">
+  <div class="istruzioni-box">
+    <strong>Come funziona:</strong> Scegli la partita che ti interessa, seleziona le foto che vuoi ordinare, compila i tuoi dati e invia. Riceverai conferma via email.
   </div>
 </div>
 
-<!-- SCREEN 2: Inserisci nome -->
-<div id="screen-nome" class="screen">
-  <h2>I tuoi dati</h2>
-  <p>Prima di vedere le foto, inserisci il tuo nome.</p>
-  <div class="form-group">
-    <label>Il tuo nome e cognome</label>
-    <input type="text" id="input-nome" placeholder="Es. Mario Rossi" autocomplete="name"/>
-  </div>
-  <div style="display:flex; gap:12px; flex-wrap:wrap;">
-    <button class="btn btn-outline" onclick="torna()">← Indietro</button>
-    <button class="btn" onclick="confermaPartita()">Vedi le foto →</button>
-  </div>
+<div class="container" id="partite-container">
+  <!-- Generato da JS -->
 </div>
 
-<!-- SCREEN 3: Galleria -->
-<div id="screen-foto" class="screen">
-  <div class="foto-header">
-    <div class="foto-header-left">
-      <h2 id="titolo-partita">Partita</h2>
-      <div class="info" id="info-genitore"></div>
+<footer>
+  7° Torneo Città di Cuneo &nbsp;·&nbsp; Aquilotti/Gazzelle &nbsp;·&nbsp; Solo per uso interno
+</footer>
+
+<script>
+const partite = [
+  { id:1,  girone:"A", squadraCasa:"Cuneo Arancione",   squadraOspite:"Amatori Savigliano",   orario:"Ven 01/05 · 10:00" },
+  { id:2,  girone:"B", squadraCasa:"Cuneo Blu",          squadraOspite:"Cavigal Nizza",         orario:"Ven 01/05 · 11:00" },
+  { id:3,  girone:"A", squadraCasa:"Gerardiana Monza",   squadraOspite:"Polisportiva Gandhi",   orario:"Ven 01/05 · 12:00" },
+  { id:4,  girone:"B", squadraCasa:"Basket Mondovì",     squadraOspite:"Pallacanestro Vado",    orario:"Ven 01/05 · 13:00" },
+  { id:5,  girone:"A", squadraCasa:"Amatori Savigliano", squadraOspite:"Ranabo Basket",         orario:"Ven 01/05 · 14:00" },
+  { id:6,  girone:"B", squadraCasa:"Cavigal Nizza",      squadraOspite:"Suzzara Fenice ASD",    orario:"Ven 01/05 · 15:00" },
+  { id:7,  girone:"B", squadraCasa:"Cuneo Blu",          squadraOspite:"Basket Mondovì",        orario:"Ven 01/05 · 16:00" },
+  { id:8,  girone:"A", squadraCasa:"Ranabo Basket",      squadraOspite:"Gerardiana Monza",      orario:"Ven 01/05 · 17:00" },
+  { id:9,  girone:"B", squadraCasa:"Cuneo Blu",          squadraOspite:"Pallacanestro Vado",    orario:"Ven 01/05 · 18:00" },
+  { id:10, girone:"A", squadraCasa:"Cuneo Arancione",    squadraOspite:"Gerardiana Monza",      orario:"Sab 02/05 · 09:00" },
+  { id:11, girone:"B", squadraCasa:"Cuneo Blu",          squadraOspite:"Suzzara Fenice ASD",    orario:"Sab 02/05 · 10:00" },
+  { id:12, girone:"A", squadraCasa:"Ranabo Basket",      squadraOspite:"Polisportiva Gandhi",   orario:"Sab 02/05 · 11:00" },
+  { id:13, girone:"A", squadraCasa:"Gerardiana Monza",   squadraOspite:"Amatori Savigliano",    orario:"Sab 02/05 · 12:00" },
+  { id:14, girone:"B", squadraCasa:"Cavigal Nizza",      squadraOspite:"Pallacanestro Vado",    orario:"Sab 02/05 · 13:00" },
+  { id:15, girone:"B", squadraCasa:"Basket Mondovì",     squadraOspite:"Suzzara Fenice ASD",    orario:"Sab 02/05 · 14:00" },
+  { id:16, girone:"A", squadraCasa:"Cuneo Arancione",    squadraOspite:"Ranabo Basket",         orario:"Sab 02/05 · 15:00" },
+  { id:17, girone:"A", squadraCasa:"Amatori Savigliano", squadraOspite:"Polisportiva Gandhi",   orario:"Sab 02/05 · 16:00" },
+  { id:18, girone:"B", squadraCasa:"Cavigal Nizza",      squadraOspite:"Basket Mondovì",        orario:"Sab 02/05 · 17:00" },
+  { id:19, girone:"B", squadraCasa:"Suzzara Fenice ASD", squadraOspite:"Pallacanestro Vado",    orario:"Sab 02/05 · 18:00" },
+  { id:20, girone:"A", squadraCasa:"Cuneo Arancione",    squadraOspite:"Polisportiva Gandhi",   orario:"Sab 02/05 · 19:00" },
+  { id:21, girone:"finale", squadraCasa:"Da definire", squadraOspite:"Da definire", orario:"Dom 03/05 · 09:00", daDefinire:true },
+  { id:22, girone:"finale", squadraCasa:"Da definire", squadraOspite:"Da definire", orario:"Dom 03/05 · 10:00", daDefinire:true },
+  { id:23, girone:"finale", squadraCasa:"Da definire", squadraOspite:"Da definire", orario:"Dom 03/05 · 11:00", daDefinire:true },
+  { id:24, girone:"finale", squadraCasa:"Da definire", squadraOspite:"Da definire", orario:"Dom 03/05 · 12:00", daDefinire:true },
+  { id:25, girone:"finale", squadraCasa:"Da definire", squadraOspite:"Da definire", orario:"Dom 03/05 · 13:00", daDefinire:true },
+];
+
+const gironi = [
+  { key:"A",      label:"Girone A",  badge:"badge-a",      cardClass:"girone-a" },
+  { key:"B",      label:"Girone B",  badge:"badge-b",      cardClass:"girone-b" },
+  { key:"finale", label:"Finali",    badge:"badge-finale",  cardClass:"girone-finale" },
+];
+
+function fotoDisponibili(id) {
+  // Legge da localStorage se ci sono foto caricate per questa partita
+  // (verrà aggiornato dinamicamente quando le foto sono su Cloudinary)
+  return false; // default: nessuna foto ancora
+}
+
+const container = document.getElementById('partite-container');
+
+gironi.forEach(girone => {
+  const partiteGirone = partite.filter(p => p.girone === girone.key);
+  
+  const section = document.createElement('div');
+  section.className = 'girone-section';
+  
+  section.innerHTML = `
+    <div class="girone-header">
+      <span class="girone-badge ${girone.badge}">${girone.key === 'finale' ? '🏆' : girone.key}</span>
+      <span class="girone-title">${girone.label}</span>
+      <span class="girone-count">${partiteGirone.length} partite</span>
     </div>
-    <div class="foto-header-right">
-      <span class="counter-badge" id="counter-badge">0 selezionate</span>
-      <button class="btn btn-outline" onclick="tornaAllePartite()" style="font-family:'DM Sans',sans-serif; font-size:0.85rem; letter-spacing:0;">← Partite</button>
-    </div>
-  </div>
+  `;
 
-  <div id="gallery-container">
-    <div class="loading-stato">
-      <div class="spinner"></div>
-      <div>Caricamento foto...</div>
-    </div>
-  </div>
-</div>
+  partiteGirone.forEach(p => {
+    const haFoto = fotoDisponibili(p.id);
+    const card = document.createElement('a');
+    
+    if (p.daDefinire) {
+      card.className = `partita-card ${girone.cardClass} da-definire`;
+      card.innerHTML = `
+        <div class="card-inner">
+          <span class="partita-num">#${p.id}</span>
+          <div class="partita-info">
+            <div class="squadre">Da definire <span class="vs">vs</span> Da definire</div>
+            <div class="meta">
+              <span class="meta-item">🕐 ${p.orario}</span>
+              <span class="no-foto-badge">In attesa</span>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      card.href = `partita.html?id=${p.id}`;
+      card.className = `partita-card ${girone.cardClass}`;
+      card.innerHTML = `
+        <div class="card-inner">
+          <span class="partita-num">#${p.id}</span>
+          <div class="partita-info">
+            <div class="squadre">${p.squadraCasa} <span class="vs">vs</span> ${p.squadraOspite}</div>
+            <div class="meta">
+              <span class="meta-item">🕐 ${p.orario}</span>
+              ${haFoto
+                ? `<span class="foto-badge">📸 Foto disponibili</span>`
+                : `<span class="no-foto-badge">Foto in arrivo</span>`}
+            </div>
+          </div>
+          <span class="freccia">→</span>
+        </div>
+      `;
+    }
+    
+    section.appendChild(card);
+  });
 
-<!-- BARRA INVIO FISSA -->
-<div class="bottom-bar" id="bottom-bar">
-  <div class="selezione-info">
-    <strong id="n-selezionate">0</strong> foto selezionate
-  </div>
-  <button class="btn" id="btn-invia" onclick="apriModale()">Invia richiesta →</button>
-</div>
-
-<!-- MODALE CONFERMA -->
-<div class="modal-overlay" id="modal-overlay">
-  <div class="modal">
-    <h3>Conferma richiesta</h3>
-    <p id="modal-riepilogo"></p>
-    <div class="lista-foto" id="modal-lista"></div>
-    <p style="font-size:0.78rem;">Riceverai conferma dal fotografo.</p>
-    <div class="azioni">
-      <button class="btn btn-outline" onclick="chiudiModale()">Annulla</button>
-      <button class="btn" id="btn-conferma-invio" onclick="inviaRichiesta()">Conferma e invia</button>
-    </div>
-  </div>
-</div>
-
-<!-- TOAST -->
-<div id="toast"></div>
-
-<script src="foto.js"></script>
-
+  container.appendChild(section);
+});
+</script>
 </body>
 </html>
