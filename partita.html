@@ -449,8 +449,8 @@
   <button class="lightbox-seleziona" id="lightbox-seleziona">✓ Seleziona</button>
 </div>
 
+<script src="partite-config.js"></script>
 <script>
-  const CLOUD_NAME = 'dsl5rkm7q';
 
   const partite = [
     { id:1,  girone:"A", squadraCasa:"Cuneo Arancione",   squadraOspite:"Amatori Savigliano",   orario:"Ven 01/05 · 10:00" },
@@ -500,17 +500,11 @@
     document.getElementById('griglia-wrapper').style.display = quale === 'griglia' ? 'block' : 'none';
   }
 
-  // --- CARICA FOTO DA CLOUDINARY ---
-  async function caricaFoto() {
+  // --- CARICA FOTO DA partite-config.js ---
+  function caricaFoto() {
     mostraStato('loading');
-    const folder = `torneo/partita-${partitaId}`;
-    const url = `https://res.cloudinary.com/${CLOUD_NAME}/image/list/${encodeURIComponent(folder)}.json`;
-
     try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error('Risposta non ok');
-      const data = await res.json();
-      fotografie = data.resources || [];
+      fotografie = FOTO_CONFIG[String(partitaId)] || [];
 
       if (fotografie.length === 0) {
         mostraStato('vuoto');
@@ -523,8 +517,7 @@
 
     } catch (err) {
       console.error(err);
-      // Se l'errore è perché la cartella non esiste ancora → vuoto
-      mostraStato('vuoto');
+      mostraStato('errore');
     }
   }
 
@@ -534,16 +527,13 @@
     griglia.innerHTML = '';
 
     fotografie.forEach((foto, i) => {
-      const publicId = foto.public_id;
-      const thumbUrl = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_300,h_200,c_fill,q_auto,f_auto/${publicId}`;
-
       const item = document.createElement('div');
       item.className = 'foto-item';
       item.style.animationDelay = `${i * 0.03}s`;
       item.dataset.index = i;
 
       item.innerHTML = `
-        <img src="${thumbUrl}" alt="Foto ${i+1}" class="loading" loading="lazy" />
+        <img src="${foto.thumb}" alt="Foto ${i+1}" class="loading" loading="lazy" />
         <div class="foto-overlay">
           <div class="check-icon">
             <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
@@ -637,7 +627,7 @@
   document.getElementById('btn-carrello').addEventListener('click', () => {
     if (selezionate.size === 0) return;
 
-    const fotoSelezionate = Array.from(selezionate).map(i => fotografie[i].public_id);
+    const fotoSelezionate = Array.from(selezionate).map(i => fotografie[i].publicId);
     const dati = {
       partitaId: partita.id,
       partitaNome: `${partita.squadraCasa} vs ${partita.squadraOspite}`,
@@ -653,7 +643,7 @@
   function apriLightbox(index) {
     lightboxIndex = index;
     const foto = fotografie[index];
-    const url = `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/w_1200,q_auto,f_auto/${foto.public_id}`;
+    const url = foto.full;
     document.getElementById('lightbox-img').src = url;
     document.getElementById('lightbox').classList.add('open');
     aggiornaUI();
