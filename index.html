@@ -337,6 +337,21 @@
   </div>
 </div>
 
+<div class="istruzioni" style="margin-top: 0;">
+  <div class="istruzioni-box" style="border-left-color: var(--grigio-scuro); font-size: 13px;">
+    <strong style="display:block; margin-bottom: 10px; color: var(--arancione); letter-spacing:1px; font-size:11px; text-transform:uppercase;">💰 Listino prezzi</strong>
+    <div style="display:grid; gap: 6px;">
+      <div style="display:flex; justify-content:space-between; gap:12px;"><span>Foto di squadra &nbsp;<small style="color:#666;">(1 singola gratis + 1 squadra)</small></span><strong style="color:var(--bianco); white-space:nowrap;">3 €</strong></div>
+      <div style="display:flex; justify-content:space-between; gap:12px;"><span>Foto singola extra &nbsp;<small style="color:#666;">(1 singola gratis + 1 extra)</small></span><strong style="color:var(--bianco); white-space:nowrap;">3 €</strong></div>
+      <div style="display:flex; justify-content:space-between; gap:12px;"><span>Pacchetto 3 singole &nbsp;<small style="color:#666;">(1 singola gratis + 2 extra)</small></span><strong style="color:var(--bianco); white-space:nowrap;">5 €</strong></div>
+      <div style="display:flex; justify-content:space-between; gap:12px;"><span>2 singole + 1 squadra &nbsp;<small style="color:#666;">(1 singola gratis + 1 extra + 1 squadra)</small></span><strong style="color:var(--bianco); white-space:nowrap;">5 €</strong></div>
+      <div style="display:flex; justify-content:space-between; gap:12px;"><span>Pacchetto completo &nbsp;<small style="color:#666;">(1 singola gratis + 2 extra + 1 squadra)</small></span><strong style="color:var(--bianco); white-space:nowrap;">7 €</strong></div>
+      <div style="height:1px; background:var(--grigio-scuro); margin: 2px 0;"></div>
+      <div style="display:flex; justify-content:space-between; gap:12px;"><span>Fuori pacchetto</span><strong style="color:var(--grigio); white-space:nowrap;">3 € / foto</strong></div>
+    </div>
+  </div>
+</div>
+
 <div class="container" id="partite-container">
   <!-- Generato da JS -->
 </div>
@@ -345,6 +360,7 @@
   7° Torneo Città di Cuneo &nbsp;·&nbsp; Aquilotti/Gazzelle &nbsp;·&nbsp; Solo per uso interno
 </footer>
 
+<script src="partite-config.js"></script>
 <script>
 const partite = [
   { id:1,  girone:"A", squadraCasa:"Cuneo Arancione",   squadraOspite:"Amatori Savigliano",   orario:"Ven 01/05 · 10:00" },
@@ -381,9 +397,9 @@ const gironi = [
 ];
 
 function fotoDisponibili(id) {
-  // Legge da localStorage se ci sono foto caricate per questa partita
-  // (verrà aggiornato dinamicamente quando le foto sono su Cloudinary)
-  return false; // default: nessuna foto ancora
+  if (typeof FOTO_CONFIG === 'undefined') return false;
+  const arr = FOTO_CONFIG[String(id)];
+  return arr && arr.length > 0;
 }
 
 const container = document.getElementById('partite-container');
