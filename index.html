@@ -349,6 +349,11 @@
   <div class="header-tag">📸 Ordine Foto</div>
   <h1>7° Torneo<span>Città di Cuneo</span></h1>
   <p class="header-sub">Aquilotti / Gazzelle &nbsp;·&nbsp; SportArea &nbsp;·&nbsp; 1–3 Maggio 2025</p>
+  <div id="badge-carrello" style="display:none;margin-top:16px;">
+    <a href="ordine.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--arancione);color:#000;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:1px;padding:10px 20px;border-radius:4px;text-decoration:none;">
+      🛒 Carrello · <span id="badge-count">0</span> foto →
+    </a>
+  </div>
 </header>
 
 <div class="istruzioni">
@@ -367,6 +372,17 @@
 
 <script src="partite-config.js"></script>
 <script>
+  // Badge carrello
+  (function() {
+    try {
+      const carrello = JSON.parse(localStorage.getItem('carrello_foto')) || {};
+      const tot = Object.values(carrello).reduce((s, p) => s + p.indici.length, 0);
+      if (tot > 0) {
+        document.getElementById('badge-count').textContent = tot;
+        document.getElementById('badge-carrello').style.display = 'block';
+      }
+    } catch(e) {}
+  })();
 const partite = [
   { id:1,  girone:"A", squadraCasa:"Cuneo Arancione",   squadraOspite:"Amatori Savigliano",   orario:"Ven 01/05 · 10:00" },
   { id:2,  girone:"B", squadraCasa:"Cuneo Blu",          squadraOspite:"Cavigal Nizza",         orario:"Ven 01/05 · 11:00" },

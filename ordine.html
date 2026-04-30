@@ -421,20 +421,44 @@
 
 </div>
 
+<script src="partite-config.js"></script>
 <script>
   const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzkv-5mFGUPP-fGsAkun4FfM_Vo_MKLFgohyr8uCYT4waEBRczKeXGgNWSzdc2uExRBTQ/exec';
+  const CARRELLO_KEY = 'carrello_foto';
 
-  // --- Legge i dati dal sessionStorage ---
-  const ordineRaw = sessionStorage.getItem('ordine');
-  if (!ordineRaw) {
+  // --- Legge il carrello multi-partita da localStorage ---
+  let carrello = {};
+  try { carrello = JSON.parse(localStorage.getItem(CARRELLO_KEY)) || {}; }
+  catch(e) {}
+
+  if (Object.keys(carrello).length === 0) {
     window.location.href = 'index.html';
   }
-  const ordine = JSON.parse(ordineRaw);
 
-  // Popola il riepilogo
-  document.getElementById('riepilogo-partita').textContent = ordine.partitaNome;
-  document.getElementById('riepilogo-orario').textContent = ordine.orario;
-  document.getElementById('badge-numero').textContent = ordine.foto.length;
+  // Costruisce la lista completa di foto e il riepilogo
+  const partiteCarrello = Object.values(carrello);
+  const tuttoLePublicId = partiteCarrello.flatMap(p => {
+    const fotoPartita = FOTO_CONFIG[String(p.partitaId)] || [];
+    return p.indici.map(i => fotoPartita[i]?.publicId).filter(Boolean);
+  });
+  const totaleFoto = tuttoLePublicId.length;
+
+  // Riepilogo: una riga per partita oppure unica se c'è una sola
+  const riepilogoPartitaEl = document.getElementById('riepilogo-partita');
+  const riepilogoOrarioEl  = document.getElementById('riepilogo-orario');
+
+  if (partiteCarrello.length === 1) {
+    riepilogoPartitaEl.textContent = partiteCarrello[0].partitaNome;
+    riepilogoOrarioEl.textContent  = partiteCarrello[0].orario;
+  } else {
+    riepilogoPartitaEl.textContent = `${partiteCarrello.length} partite selezionate`;
+    // Lista compatta
+    riepilogoOrarioEl.innerHTML = partiteCarrello
+      .map(p => `<span style="display:block;font-size:12px;margin-top:4px;color:var(--grigio)">${p.indici.length} foto · ${p.partitaNome}</span>`)
+      .join('');
+  }
+
+  document.getElementById('badge-numero').textContent = totaleFoto;
 
   // --- Mostra/nascondi sezioni ---
   function mostra(id) {
@@ -489,8 +513,10 @@
       cognome,
       telefono,
       copie: parseInt(copie),
-      partita: ordine.partitaNome + ' · ' + ordine.orario,
-      foto: ordine.foto,
+      partita: partiteCarrello.length === 1
+        ? partiteCarrello[0].partitaNome + ' · ' + partiteCarrello[0].orario
+        : partiteCarrello.map(p => p.partitaNome + ' · ' + p.orario).join(' | '),
+      foto: tuttoLePublicId,
     };
 
     mostra('stato-invio');
@@ -502,7 +528,7 @@
     }).catch(err => console.error('Fetch error:', err));
 
     document.getElementById('ok-nome').textContent = nome;
-    sessionStorage.removeItem('ordine');
+    localStorage.removeItem(CARRELLO_KEY);
     mostra('stato-ok');
   });
 </script>

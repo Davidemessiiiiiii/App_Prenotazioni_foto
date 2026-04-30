@@ -528,6 +528,42 @@
   document.getElementById('header-meta').textContent = `Girone ${partita.girone} · ${partita.orario}`;
   document.title = `${partita.squadraCasa} vs ${partita.squadraOspite} – Foto`;
 
+  // --- CARRELLO localStorage ---
+  const CARRELLO_KEY = 'carrello_foto';
+
+  function leggiCarrello() {
+    try { return JSON.parse(localStorage.getItem(CARRELLO_KEY)) || {}; }
+    catch(e) { return {}; }
+  }
+
+  function salvaCarrelloPartita(indici) {
+    const carrello = leggiCarrello();
+    if (indici.size === 0) {
+      delete carrello[partitaId];
+    } else {
+      carrello[partitaId] = {
+        partitaId: partita.id,
+        partitaNome: `${partita.squadraCasa} vs ${partita.squadraOspite}`,
+        orario: partita.orario,
+        girone: partita.girone,
+        indici: Array.from(indici),
+      };
+    }
+    localStorage.setItem(CARRELLO_KEY, JSON.stringify(carrello));
+  }
+
+  function totaleFotoCarrello() {
+    const carrello = leggiCarrello();
+    return Object.values(carrello).reduce((tot, p) => tot + p.indici.length, 0);
+  }
+
+  function fotoAltrePartite() {
+    const carrello = leggiCarrello();
+    return Object.entries(carrello)
+      .filter(([id]) => parseInt(id) !== partitaId)
+      .reduce((tot, [, p]) => tot + p.indici.length, 0);
+  }
+
   // --- STATO ---
   let fotografie = [];
   let selezionate = new Set();
@@ -554,6 +590,28 @@
       renderGriglia();
       mostraStato('griglia');
       document.getElementById('griglia-count').textContent = `${fotografie.length} foto disponibili`;
+
+      // Ripristina selezione salvata per questa partita
+      const carrello = leggiCarrello();
+      if (carrello[partitaId]) {
+        carrello[partitaId].indici.forEach(i => {
+          selezionate.add(i);
+          const item = document.querySelector(`.foto-item[data-index="${i}"]`);
+          if (item) item.classList.add('selezionata');
+        });
+      }
+
+      // Banner altre partite nel carrello
+      const altre = fotoAltrePartite();
+      if (altre > 0) {
+        const banner = document.createElement('div');
+        banner.id = 'banner-carrello';
+        banner.style.cssText = 'background:rgba(255,107,0,0.10);border:1px solid rgba(255,107,0,0.3);border-radius:6px;padding:10px 16px;margin-bottom:16px;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:8px;';
+        banner.innerHTML = `<span>🛒 Hai già <strong style="color:var(--arancione)">${altre} foto</strong> da altre partite nel carrello</span><a href="ordine.html" style="color:var(--arancione);font-weight:700;text-decoration:none;white-space:nowrap;">Vai all'ordine →</a>`;
+        document.querySelector('.griglia-info').insertAdjacentElement('beforebegin', banner);
+      }
+
+      aggiornaUI();
 
     } catch (err) {
       console.error(err);
@@ -619,6 +677,7 @@
       selezionate.add(index);
       el.classList.add('selezionata');
     }
+    salvaCarrelloPartita(selezionate);
     aggiornaUI();
   }
 
@@ -629,6 +688,11 @@
     const barraCount = document.getElementById('barra-count');
 
     barraCount.textContent = `${n} foto selezionat${n === 1 ? 'a' : 'e'}`;
+    const totale = totaleFotoCarrello();
+    const sub = document.querySelector('.barra-sub');
+    sub.textContent = totale > n
+      ? `+ ${totale - n} da altre partite · totale ${totale}`
+      : 'Tap su "Procedi" per ordinare';
     contatoreHeader.textContent = `${n} foto`;
 
     if (n > 0) {
@@ -666,22 +730,14 @@
       }
     });
     document.getElementById('btn-seleziona-tutto').textContent = tutti ? 'Seleziona tutte' : 'Deseleziona tutte';
+    salvaCarrelloPartita(selezionate);
     aggiornaUI();
   });
 
   // --- PROCEDI AL CARRELLO ---
   document.getElementById('btn-carrello').addEventListener('click', () => {
     if (selezionate.size === 0) return;
-
-    const fotoSelezionate = Array.from(selezionate).map(i => fotografie[i].publicId);
-    const dati = {
-      partitaId: partita.id,
-      partitaNome: `${partita.squadraCasa} vs ${partita.squadraOspite}`,
-      orario: partita.orario,
-      foto: fotoSelezionate,
-    };
-
-    sessionStorage.setItem('ordine', JSON.stringify(dati));
+    salvaCarrelloPartita(selezionate);
     window.location.href = 'ordine.html';
   });
 
