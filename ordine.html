@@ -319,6 +319,63 @@
     @media (min-width: 540px) {
       .container { padding: 32px 24px; }
     }
+
+    /* GDPR */
+    .gdpr-box {
+      background: rgba(255,107,0,0.05);
+      border: 1px solid rgba(255,107,0,0.25);
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+    .gdpr-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--bianco);
+      line-height: 1.6;
+    }
+    .gdpr-label input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: var(--arancione);
+      flex-shrink: 0;
+    }
+    .gdpr-testo-small {
+      font-size: 11px;
+      color: var(--grigio);
+      line-height: 1.6;
+      margin-top: 10px;
+    }
+    .gdpr-errore {
+      display: none;
+      color: var(--rosso);
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 8px;
+      padding: 6px 10px;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.3);
+      border-radius: 4px;
+    }
+    .gdpr-errore.visibile { display: block; }
+
+    /* FOOTER COPYRIGHT */
+    .footer-copy {
+      text-align: center;
+      padding: 20px;
+      font-size: 12px;
+      color: var(--grigio);
+      border-top: 1px solid var(--grigio-scuro);
+      margin-top: 36px;
+      line-height: 1.8;
+    }
+    .footer-copy strong { color: #666; }
   </style>
 </head>
 <body>
@@ -408,11 +465,24 @@
 
   <div class="sep"></div>
 
-  <p class="nota">
-    I tuoi dati verranno utilizzati esclusivamente per la gestione dell'ordine e il ritiro delle foto. Non saranno condivisi con terze parti.
-  </p>
+  <!-- GDPR -->
+  <div class="gdpr-box">
+    <label class="gdpr-label" for="consenso-gdpr">
+      <input type="checkbox" id="consenso-gdpr" />
+      <span>
+        Acconsento al trattamento dei miei dati personali ai sensi dell'<strong>art. 13 del Regolamento (UE) 2016/679 (GDPR)</strong> per la gestione dell'ordine fotografico. I dati <strong>non saranno ceduti a terze parti</strong>. <em>(obbligatorio)</em>
+      </span>
+    </label>
+    <div class="gdpr-testo-small">
+      Titolare del trattamento: <strong>Davide Messi</strong>. I dati (nome, cognome, telefono) sono raccolti esclusivamente per organizzare la consegna delle foto. Hai diritto di accesso, rettifica e cancellazione dei dati in qualsiasi momento (artt. 15–17 GDPR), nonché di limitazione e opposizione (artt. 18–21 GDPR). Contatto: <a href="mailto:privacy@tuamail.it" style="color:var(--arancione);">privacy@tuamail.it</a>
+    </div>
+    <div class="gdpr-errore" id="gdpr-errore">
+      ⚠ Devi accettare il trattamento dei dati per procedere con l'ordine.
+    </div>
+  </div>
 
   <button class="btn-invia" id="btn-invia">Conferma ordine →</button>
+
 
   <div style="margin-top: 24px; text-align: center; font-size: 13px; color: var(--grigio); line-height: 1.8;">
     Hai bisogno di aiuto?<br>
@@ -501,6 +571,14 @@
 
   // --- Invio ---
   document.getElementById('btn-invia').addEventListener('click', async () => {
+    const gdpr = document.getElementById('consenso-gdpr');
+    const gdprErrore = document.getElementById('gdpr-errore');
+    if (!gdpr.checked) {
+      gdprErrore.classList.add('visibile');
+      gdpr.closest('.gdpr-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    gdprErrore.classList.remove('visibile');
     if (!valida()) return;
 
     const nome = document.getElementById('nome').value.trim();
@@ -532,5 +610,10 @@
     mostra('stato-ok');
   });
 </script>
+
+<footer class="footer-copy">
+  © 2026 <strong>Davide Messi</strong> — Tutti i diritti riservati.<br>
+  <span style="font-size:11px;">I contenuti sono protetti dalla normativa sul diritto d'autore. È vietata la riproduzione senza autorizzazione.</span>
+</footer>
 </body>
 </html>
