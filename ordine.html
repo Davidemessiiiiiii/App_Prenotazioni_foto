@@ -528,17 +528,36 @@
       foto: ordine.foto,
     };
 
+        // Controlla subito se offline
+    if (!navigator.onLine) {
+    mostra('stato-errore');
+    return;
+    }
+
     mostra('stato-invio');
 
-    fetch(APPS_SCRIPT_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      body: JSON.stringify(payload),
-    }).catch(err => console.error('Fetch error:', err));
+    // Usa GET con parametri — così Apps Script può rispondere e puoi leggere il risultato
+    const params = new URLSearchParams({
+    nome,
+    cognome,
+    telefono,
+    copie,
+    partita: ordine.partitaNome + ' · ' + ordine.orario,
+    foto: JSON.stringify(ordine.foto),
+    });
 
-    document.getElementById('ok-nome').textContent = nome;
+    try {
+    const res = await fetch(APPS_SCRIPT_URL + '?' + params.toString());
+
+    if (!res.ok) throw new Error('Risposta non OK: ' + res.status);
+
     sessionStorage.removeItem('ordine');
     mostra('stato-ok');
+
+    } catch (err) {
+    console.error('Fetch error:', err);
+    mostra('stato-errore');
+    }
   });
 </script>
 </body>
